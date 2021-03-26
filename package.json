@@ -1,0 +1,33 @@
+{
+  "name": "@wsmud/allpot",
+  "version": "0.1.0",
+  "description": "计算自己的潜能总和",
+  "main": "index.js",
+  "bin": {
+    "pot": "index.js"
+  },
+  "keywords": [
+    "js",
+    "mud",
+    "武神传说",
+    "潜能"
+  ],
+  "author": "line",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "json5": "^2.2.0",
+    "prompts": "^2.4.0",
+    "qs": "^6.10.1",
+    "ws": "^7.4.4"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wsmud/allpot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wsmud/allpot/issues"
+  },
+  "homepage": "https://github.com/wsmud/allpot#readme"
+}
