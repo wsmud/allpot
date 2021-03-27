@@ -50,6 +50,7 @@ async function getServer() {
         { title: '测试服', value: 4 },
       ],
       initial: 0,
+      hint: '上下键移动，回车键确认',
     },
     {
       onCancel: () => process.exit(),
@@ -67,6 +68,7 @@ async function getRole(roles) {
       message: '哪个角色？',
       choices: roles,
       initial: 0,
+      hint: '上下键移动，回车键确认',
     },
     {
       onCancel: () => process.exit(),
