@@ -90,6 +90,12 @@ async function onMessage(data) {
       socket.socket.close();
     }
 
+    if (data.msg.includes('必须先取消融合才可以重置武道')) {
+      console.log(`总潜能: ${remainPot + skillsPot + createPot}`);
+      console.log('因存在进阶后融合的技能，无法获取进阶潜能。')
+      socket.socket.close();
+    }
+
     if (data.msg.includes('没有领悟') || data.msg.includes('没有这个技能')) {
       console.log(`总潜能: ${remainPot + skillsPot + updatePot + createPot}`);
       socket.socket.close();

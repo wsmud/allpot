@@ -7,7 +7,7 @@ async function getAccount() {
       type: 'text',
       name: 'account',
       message: '账号？',
-      validate: (value) => (/^[a-z0-9]{5,15}$/.test(value) ? true : '账号输入错误，请重新输入。'),
+      validate: (value) => (/^[a-z0-9]+$/.test(value) ? true : '账号输入错误，请重新输入。'),
     },
     {
       onCancel: () => process.exit(),
@@ -79,10 +79,12 @@ async function getRole(roles) {
 async function getBaseSkill() {
   const response = await prompts(
     {
-      type: 'confirm',
+      type: 'toggle',
       name: 'base',
       message: '是否包含基础技能？',
       initial: true,
+      active: 'yes',
+      inactive: 'no'
     },
     {
       onCancel: () => process.exit(),
