@@ -19,10 +19,10 @@ const type2cmd = {
 let id;
 let types;
 let socket;
-let baseSkill = true;
 let havaCreateSkill = false;
 let remainPot = 0;
 let skillsPot = 0;
+let baseSkillsPot = 0;
 let updatePot = 0;
 let createPot = 0;
 
@@ -41,7 +41,6 @@ async function onMessage(data) {
       })),
     );
 
-    baseSkill = await prompts.getBaseSkill();
     socket.send(`login ${userId}`);
   }
 
@@ -55,12 +54,15 @@ async function onMessage(data) {
     console.log(`剩余潜能: ${remainPot}`);
     data.items.forEach((skill) => {
       if (skill.id === id) havaCreateSkill = true;
-      if (baseSkill || (!baseSkill && !skill.name.includes('wht'))) {
+      if (skill.name.includes('wht')) {
+        baseSkillsPot += getPot(skill.name, skill.level);
+      } else {
         skillsPot += getPot(skill.name, skill.level);
       }
     });
 
-    console.log(`技能潜能: ${skillsPot}`);
+    console.log(`基础技能: ${baseSkillsPot}`);
+    console.log(`特殊技能: ${skillsPot}`);
     socket.send(havaCreateSkill ? `checkskill ${id} help` : 'lingwu reset,xiulian');
   }
 
@@ -86,18 +88,18 @@ async function onMessage(data) {
     if (data.msg.includes('并返回你消耗的')) {
       updatePot = Number(data.msg.match(/并返回你消耗的(.*?)潜能/)[1]);
       console.log(`进阶潜能: ${updatePot}`);
-      console.log(`总潜能: ${remainPot + skillsPot + updatePot + createPot}`);
+      console.log(`总潜能: ${remainPot + skillsPot + baseSkillsPot + updatePot + createPot}`);
       socket.socket.close();
     }
 
     if (data.msg.includes('必须先取消融合才可以重置武道')) {
-      console.log(`总潜能: ${remainPot + skillsPot + createPot}`);
+      console.log(`总潜能: ${remainPot + skillsPot + baseSkillsPot + createPot}`);
       console.log('因存在进阶后融合的技能，无法获取进阶潜能。')
       socket.socket.close();
     }
 
     if (data.msg.includes('没有领悟') || data.msg.includes('没有这个技能')) {
-      console.log(`总潜能: ${remainPot + skillsPot + updatePot + createPot}`);
+      console.log(`总潜能: ${remainPot + skillsPot + baseSkillsPot + updatePot + createPot}`);
       socket.socket.close();
     }
   }

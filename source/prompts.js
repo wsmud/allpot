@@ -76,28 +76,9 @@ async function getRole(roles) {
   return response.role;
 }
 
-async function getBaseSkill() {
-  const response = await prompts(
-    {
-      type: 'toggle',
-      name: 'base',
-      message: '是否包含基础技能？',
-      initial: true,
-      active: 'yes',
-      inactive: 'no'
-    },
-    {
-      onCancel: () => process.exit(),
-    },
-  );
-
-  return response.base;
-}
-
 module.exports = {
   getServer,
   getAccount,
   getPassword,
   getRole,
-  getBaseSkill,
 };
