@@ -13,7 +13,10 @@ const color = {
 
 function getPot(name, level) {
   const lv = name.match(/<(.+?)>/)[1];
-  return lv in color ? (((level + 100) * (level - 100)) / 2) * color[lv] * 5 : 0;
+  if (level <= 100 || !(lv in color)) {
+    return 0;
+  }
+  return (((level + 100) * (level - 100)) / 2) * color[lv] * 5;
 }
 
 async function getWsUrl(serverNum) {
