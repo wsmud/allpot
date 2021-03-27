@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const chalk = require('chalk');
 const prompts = require('./source/prompts');
 const Socket = require('./source/Socket');
 const { getPot } = require('./source/util');
@@ -30,7 +31,7 @@ async function onMessage(data) {
   const { type } = data;
   if (type === 'roles') {
     if (data.roles.length < 1) {
-      console.log('无角色，请确认账号区服信息。');
+      console.log(chalk.red('无角色，请确认账号区服信息。'));
       process.exit();
     }
 
@@ -47,11 +48,12 @@ async function onMessage(data) {
   if (type === 'login') {
     id = data.id;
     socket.send('stopstate,cha');
+    console.log(chalk.white('-'.repeat(25)));
   }
 
   if (type === 'dialog' && data.dialog === 'skills' && data.items) {
     remainPot = data.pot;
-    console.log(`剩余潜能: ${remainPot}`);
+    console.log(chalk.blue(`🌟剩余潜能: ${remainPot}`));
     data.items.forEach((skill) => {
       if (skill.id === id) havaCreateSkill = true;
       if (skill.name.includes('wht')) {
@@ -61,8 +63,8 @@ async function onMessage(data) {
       }
     });
 
-    console.log(`基础技能: ${baseSkillsPot}`);
-    console.log(`特殊技能: ${skillsPot}`);
+    console.log(chalk.blue(`🌟基础技能: ${baseSkillsPot}`));
+    console.log(chalk.blue(`🌟特殊技能: ${skillsPot}`));
     socket.send(havaCreateSkill ? `checkskill ${id} help` : 'lingwu reset,xiulian');
   }
 
@@ -82,24 +84,31 @@ async function onMessage(data) {
     if (data.msg.includes('将返回你消耗的')) {
       const info = data.msg.match(/移除.+?的【(.+?)】类型.+武道书，(.*?)潜能/);
       createPot += Number(info[2]);
-      console.log(`自创${info[1]}: ${info[2]}`);
+      console.log(chalk.blue(`🌟自创${info[1]}: ${info[2]}`));
     }
 
     if (data.msg.includes('并返回你消耗的')) {
       updatePot = Number(data.msg.match(/并返回你消耗的(.*?)潜能/)[1]);
-      console.log(`进阶潜能: ${updatePot}`);
-      console.log(`总潜能: ${remainPot + skillsPot + baseSkillsPot + updatePot + createPot}`);
+      console.log(chalk.blue(`🌟进阶潜能: ${updatePot}`));
+      console.log(
+        chalk.blue(`🌟总潜能: ${remainPot + skillsPot + baseSkillsPot + updatePot + createPot}`),
+      );
+      console.log(chalk.white('-'.repeat(25)));
       socket.socket.close();
     }
 
     if (data.msg.includes('必须先取消融合才可以重置武道')) {
-      console.log(`总潜能: ${remainPot + skillsPot + baseSkillsPot + createPot}`);
-      console.log('因存在进阶后融合的技能，无法获取进阶潜能。')
+      console.log(chalk.blue(`🌟总潜能: ${remainPot + skillsPot + baseSkillsPot + createPot}`));
+      console.log(chalk.white('-'.repeat(25)));
+      console.log(chalk.red('因存在进阶后融合的技能，无法获取进阶潜能。'));
       socket.socket.close();
     }
 
     if (data.msg.includes('没有领悟') || data.msg.includes('没有这个技能')) {
-      console.log(`总潜能: ${remainPot + skillsPot + baseSkillsPot + updatePot + createPot}`);
+      console.log(
+        chalk.blue(`🌟总潜能: ${remainPot + skillsPot + baseSkillsPot + updatePot + createPot}`),
+      );
+      console.log(chalk.white('-'.repeat(25)));
       socket.socket.close();
     }
   }
