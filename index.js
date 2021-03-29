@@ -31,7 +31,7 @@ async function onMessage(data) {
   const { type } = data;
   if (type === 'roles') {
     if (data.roles.length < 1) {
-      console.log(chalk.red('无角色，请确认账号区服信息。'));
+      console.log(chalk.red('❗️无角色，请确认账号区服信息。'));
       process.exit();
     }
 
@@ -100,7 +100,7 @@ async function onMessage(data) {
     if (data.msg.includes('必须先取消融合才可以重置武道')) {
       console.log(chalk.blue(`🌟总潜能: ${remainPot + skillsPot + baseSkillsPot + createPot}`));
       console.log(chalk.white('-'.repeat(25)));
-      console.log(chalk.red('因存在进阶后融合的技能，无法获取进阶潜能。'));
+      console.log(chalk.red('❗️因存在进阶后融合的技能，无法获取进阶潜能。'));
       socket.socket.close();
     }
 

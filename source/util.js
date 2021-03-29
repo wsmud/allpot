@@ -1,5 +1,6 @@
 const qs = require('qs');
 const axios = require('axios');
+const chalk = require('chalk');
 
 const color = {
   wht: 1,
@@ -22,7 +23,7 @@ function getPot(name, level) {
 async function getWsUrl(serverNum) {
   const res = await axios.get('http://game.wsmud.com/game/getserver');
   if (res.status !== 200 || !Array.isArray(res.data) || res.data.length < serverNum) {
-    console.log('获取服务器地址失败。');
+    console.log(chalk.red('❗️获取服务器地址失败。'));
     process.exit();
   }
 
