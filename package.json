@@ -1,6 +1,6 @@
 {
   "name": "@wsmud/allpot",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "计算自己的潜能总和",
   "main": "index.js",
   "bin": {

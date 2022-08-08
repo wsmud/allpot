@@ -21,7 +21,7 @@ function getPot(name, level) {
 }
 
 async function getWsUrl(serverNum) {
-  const res = await axios.get('http://game.wsmud.com/game/getserver');
+  const res = await axios.get('http://www.wamud.com/game/getserver');
   if (res.status !== 200 || !Array.isArray(res.data) || res.data.length < serverNum) {
     console.log(chalk.red('❗️获取服务器地址失败。'));
     process.exit();
@@ -33,7 +33,7 @@ async function getWsUrl(serverNum) {
 
 async function getToken(account, password) {
   const res = await axios.post(
-    'http://game.wsmud.com/userapi/login',
+    'http://www.wamud.com/userapi/login',
     qs.stringify({ code: account, pwd: password }),
   );
   if (res.status !== 200 || res.data.code !== 1) {
